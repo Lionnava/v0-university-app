@@ -161,11 +161,28 @@ export default function Home() {
         </section>
       </main>
 
-      <footer className="bg-gray-100 p-4">
-        <div className="container mx-auto text-center text-sm text-gray-600">
-          Sistema de Gestión Universitaria © {new Date().getFullYear()}
-        </div>
-      </footer>
+      <footer className="bg-white p-4 border-t border-gray-200">
+  <div className="container mx-auto">
+    /* Línea superior: Nombre del sistema + versión */
+    <div className="flex justify-between items-center mb-2">
+      <span className="text-sm font-semibold text-gray-800">
+        UPTMA-Moján
+      </span>
+      <span className="text-xs text-gray-500">
+        Sistema de Gestión Universitaria +2.0
+      </span>
+    </div>
+
+    <div className="flex justify-between items-center text-xs text-gray-500">
+      <span>
+        <p>Desarrollado por</p> <span className="font-medium">Ing. Lionell Nava.</span>
+      </span>
+      <span>
+        <p>© {new Date().getFullYear()} Uptma-Moján.</p> © Derechos reservados.
+      </span>
+    </div>
+  </div>
+</footer>
     </div>
   )
 }
