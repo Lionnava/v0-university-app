@@ -165,9 +165,9 @@ export function EnrollmentForm({ isOpen, onClose, onSubmit }: EnrollmentFormProp
                       </SelectTrigger>
                     </FormControl>
                     <SelectContent>
-                      <SelectItem value="2023-1">2023 - Trimestre I</SelectItem>
-                      <SelectItem value="2023-2">2023 - Trimestre II</SelectItem>
-                      <SelectItem value="2023-3">2023 - Trimestre III</SelectItem>
+                      <SelectItem value="2025-1">2025 - Trimestre I</SelectItem>
+                      <SelectItem value="2025-2">2025 - Trimestre II</SelectItem>
+                      <SelectItem value="2025-3">2025 - Trimestre III</SelectItem>
                     </SelectContent>
                   </Select>
                   <FormMessage />
