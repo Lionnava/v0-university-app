@@ -163,7 +163,7 @@ export default function Home() {
 
       <footer className="bg-white p-4 border-t border-gray-200">
   <div className="container mx-auto">
-    /* Línea superior: Nombre del sistema + versión */
+    {/* Línea superior: Nombre del sistema + versión */}
     <div className="flex justify-between items-center mb-2">
       <span className="text-sm font-semibold text-gray-800">
         UPTMA-Moján
