@@ -178,7 +178,7 @@ export default function Home() {
         <p>Desarrollado por</p> <span className="font-medium">Ing. Lionell Nava.</span>
       </span>
       <span>
-        <p>© {new Date().getFullYear()} Uptma-Moján.</p> © Derechos reservados.
+        <p>© {new Date().getFullYear()} Uptma-Moján.</p> Derechos reservados.
       </span>
     </div>
   </div>
