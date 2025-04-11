@@ -8,7 +8,7 @@ export default function Home() {
     <div className="flex flex-col min-h-screen">
       <header className="bg-blue-700 text-white p-4">
         <div className="container mx-auto">
-          <h1 className="text-2xl font-bold">Sistema de Gestión Universitaria</h1>
+          <h1 className="text-2xl font-bold">UPTMA-Moján. /Sistema de Gestión Universitaria /</h1>
         </div>
       </header>
 
