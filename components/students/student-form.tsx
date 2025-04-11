@@ -1,4 +1,4 @@
-"use client"
+uaria"use client"
 import { Button } from "@/components/ui/button"
 import {
   Dialog,
@@ -239,7 +239,7 @@ export function StudentForm({ isOpen, onClose, onSubmit, initialData }: StudentF
                         <SelectItem value="informatica">Ingeniería Informática</SelectItem>
                         <SelectItem value="administracion">Administración</SelectItem>
                         <SelectItem value="contaduria">Contaduría</SelectItem>
-                        <SelectItem value="industrial">Ingeniería Industrial</SelectItem>
+                        <SelectItem value="industrial">Agropecuaria</SelectItem>
                       </SelectContent>
                     </Select>
                     <FormMessage />
