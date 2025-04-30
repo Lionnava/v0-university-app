@@ -9,36 +9,9 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { ChevronLeft, Search, UserPlus, FileDown, Filter } from "lucide-react"
-import { StudentForm } from "@/components/students/student-form"
-import { EnrollmentForm } from "@/components/enrollment/enrollment-form"
-
-type Student = {
-  id: string
-  name: string
-  cedula: string
-  career: string
-  status: string
-  firstName?: string
-  lastName?: string
-  email?: string
-  phone?: string
-}
 
 export default function StudentsPage() {
   const [activeTab, setActiveTab] = useState("registro")
-  const [isStudentFormOpen, setIsStudentFormOpen] = useState(false)
-  const [isEnrollmentFormOpen, setIsEnrollmentFormOpen] = useState(false)
-  const [selectedStudent, setSelectedStudent] = useState<Student | null>(null)
-
-  function handleNewStudent(values: any) {
-    console.log("Nuevo estudiante:", values)
-    // Aquí implementarías la lógica para guardar el estudiante en la base de datos
-  }
-
-  function handleEnrollment(values: any) {
-    console.log("Inscripción:", values)
-    // Aquí implementarías la lógica para guardar la inscripción en la base de datos
-  }
 
   return (
     <div className="flex flex-col min-h-screen">
@@ -67,7 +40,7 @@ export default function StudentsPage() {
             <Card>
               <CardHeader className="flex flex-row items-center justify-between">
                 <CardTitle>Registro de Estudiantes</CardTitle>
-                <Button onClick={() => setIsStudentFormOpen(true)}>
+                <Button>
                   <UserPlus className="mr-2 h-4 w-4" />
                   Nuevo Estudiante
                 </Button>
@@ -134,14 +107,7 @@ export default function StudentsPage() {
                             <Button variant="ghost" size="sm">
                               Ver
                             </Button>
-                            <Button
-                              variant="ghost"
-                              size="sm"
-                              onClick={() => {
-                                setSelectedStudent(student)
-                                setIsStudentFormOpen(true)
-                              }}
-                            >
+                            <Button variant="ghost" size="sm">
                               Editar
                             </Button>
                           </TableCell>
@@ -208,9 +174,7 @@ export default function StudentsPage() {
                     </ul>
                   </div>
 
-                  <Button className="w-full" onClick={() => setIsEnrollmentFormOpen(true)}>
-                    Iniciar Proceso de Inscripción
-                  </Button>
+                  <Button className="w-full">Iniciar Proceso de Inscripción</Button>
                 </div>
               </CardContent>
             </Card>
@@ -320,47 +284,6 @@ export default function StudentsPage() {
           Sistema de Gestión Universitaria © {new Date().getFullYear()}
         </div>
       </footer>
-      {isStudentFormOpen && (
-        <StudentForm
-          isOpen={isStudentFormOpen}
-          onClose={() => {
-            setIsStudentFormOpen(false)
-            setSelectedStudent(null)
-          }}
-          onSubmit={handleNewStudent}
-          initialData={
-            selectedStudent
-              ? {
-                  firstName: selectedStudent.firstName || selectedStudent.name.split(" ")[0],
-                  lastName: selectedStudent.lastName || selectedStudent.name.split(" ")[1],
-                  cedula: selectedStudent.cedula,
-                  birthDate: "",
-                  gender: "masculino",
-                  email: selectedStudent.email || "",
-                  phone: selectedStudent.phone || "",
-                  address: "",
-                  career:
-                    selectedStudent.career === "Ingeniería Informática"
-                      ? "informatica"
-                      : selectedStudent.career === "Administración"
-                        ? "administracion"
-                        : selectedStudent.career === "Contaduría"
-                          ? "contaduria"
-                          : "industrial",
-                  admissionDate: "",
-                  status: selectedStudent.status.toLowerCase(),
-                }
-              : undefined
-          }
-        />
-      )}
-      {isEnrollmentFormOpen && (
-        <EnrollmentForm
-          isOpen={isEnrollmentFormOpen}
-          onClose={() => setIsEnrollmentFormOpen(false)}
-          onSubmit={handleEnrollment}
-        />
-      )}
     </div>
   )
 }
@@ -391,4 +314,3 @@ const studentData = [
     status: "Egresado",
   },
 ]
-

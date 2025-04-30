@@ -8,7 +8,7 @@ export default function Home() {
     <div className="flex flex-col min-h-screen">
       <header className="bg-blue-700 text-white p-4">
         <div className="container mx-auto">
-          <h1 className="text-2xl font-bold">UPTMA-Moján. /Sistema de Gestión Universitaria /</h1>
+          <h1 className="text-2xl font-bold">Sistema de Gestión Universitaria</h1>
         </div>
       </header>
 
@@ -110,7 +110,7 @@ export default function Home() {
             <Card>
               <CardHeader>
                 <CardTitle>Calendario Académico</CardTitle>
-                <CardDescription>Períodos y trayectos académicos</CardDescription>
+                <CardDescription>Períodos y eventos académicos</CardDescription>
               </CardHeader>
               <CardContent>
                 <div className="flex justify-center p-4">
@@ -161,7 +161,7 @@ export default function Home() {
         </section>
       </main>
 
-      <footer className="bg-white p-4 border-t border-gray-200">
+       <footer className="bg-white p-4 border-t border-gray-200">
   <div className="container mx-auto">
     {/* Línea superior: Nombre del sistema + versión */}
     <div className="flex justify-between items-center mb-2">
@@ -186,4 +186,3 @@ export default function Home() {
     </div>
   )
 }
-

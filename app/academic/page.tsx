@@ -6,151 +6,22 @@ import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import { ChevronLeft, Plus, Search, Filter, Calendar } from "lucide-react"
-import { SubjectForm } from "@/components/academic/subject-form"
-import { SectionForm } from "@/components/academic/section-form"
-import { Badge } from "@/components/ui/badge"
+import { ChevronLeft, Plus, Search } from "lucide-react"
 
 export default function AcademicPage() {
   const [activeTab, setActiveTab] = useState("materias")
-  const [isSubjectFormOpen, setIsSubjectFormOpen] = useState(false)
-  const [selectedSubject, setSelectedSubject] = useState(null)
-  const [isSectionFormOpen, setIsSectionFormOpen] = useState(false)
-  const [selectedSection, setSelectedSection] = useState(null)
-  const [searchTerm, setSearchTerm] = useState("")
-  const [periodFilter, setPeriodFilter] = useState("all")
-  const [departmentFilter, setDepartmentFilter] = useState("all")
-  const [subjectData, setSubjectData] = useState([
-    {
-      code: "INF-101",
-      name: "Introducción a la Programación",
-      credits: 4,
-      department: "Informática",
-      periodId: "2023-T1",
-      isActive: true,
-    },
-    {
-      code: "MAT-201",
-      name: "Cálculo I",
-      credits: 4,
-      department: "Matemáticas",
-      periodId: "2023-T1",
-      isActive: true,
-    },
-    {
-      code: "ADM-301",
-      name: "Administración de Empresas",
-      credits: 3,
-      department: "Administración",
-      periodId: "2023-T2",
-      isActive: true,
-    },
-    {
-      code: "CON-101",
-      name: "Contabilidad Básica",
-      credits: 3,
-      department: "Contaduría",
-      periodId: "2023-T2",
-      isActive: false,
-    },
-    {
-      code: "INF-202",
-      name: "Estructura de Datos",
-      credits: 4,
-      department: "Informática",
-      periodId: "2023-T3",
-      isActive: true,
-    },
-  ])
-
-  function handleNewSubject(values: any) {
-    console.log("Nueva materia:", values)
-    // Aquí implementarías la lógica para guardar la materia en la base de datos
-
-    // Simulación de actualización de datos
-    if (selectedSubject) {
-      // Actualizar materia existente
-      setSubjectData(
-        subjectData.map((subject) =>
-          subject.code === selectedSubject.code
-            ? {
-                ...subject,
-                name: values.name,
-                credits: values.credits,
-                department:
-                  values.department === "informatica"
-                    ? "Informática"
-                    : values.department === "matematicas"
-                      ? "Matemáticas"
-                      : values.department === "administracion"
-                        ? "Administración"
-                        : "Contaduría",
-                periodId: values.periodId,
-                isActive: values.isActive,
-              }
-            : subject,
-        ),
-      )
-    } else {
-      // Crear nueva materia
-      const newSubject = {
-        code: values.code,
-        name: values.name,
-        credits: values.credits,
-        department:
-          values.department === "informatica"
-            ? "Informática"
-            : values.department === "matematicas"
-              ? "Matemáticas"
-              : values.department === "administracion"
-                ? "Administración"
-                : "Contaduría",
-        periodId: values.periodId,
-        isActive: values.isActive,
-      }
-      setSubjectData([...subjectData, newSubject])
-    }
-  }
-
-  function handleNewSection(values: any) {
-    console.log("Nueva sección:", values)
-    // Aquí implementarías la lógica para guardar la sección en la base de datos
-  }
-
-  // Filtrar materias por término de búsqueda y filtros
-  const filteredSubjects = subjectData.filter((subject) => {
-    // Filtro de búsqueda
-    const matchesSearch =
-      subject.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      subject.code.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      subject.department.toLowerCase().includes(searchTerm.toLowerCase())
-
-    // Filtro de período
-    const matchesPeriod = periodFilter === "all" || subject.periodId === periodFilter
-
-    // Filtro de departamento
-    const matchesDepartment =
-      departmentFilter === "all" ||
-      subject.department.toLowerCase() ===
-        (departmentFilter === "informatica"
-          ? "informática"
-          : departmentFilter === "matematicas"
-            ? "matemáticas"
-            : departmentFilter === "administracion"
-              ? "administración"
-              : "contaduría")
-
-    return matchesSearch && matchesPeriod && matchesDepartment
-  })
-
-  // Obtener el nombre del período a partir del ID
-  function getPeriodName(periodId: string) {
-    const period = academicPeriods.find((p) => p.id === periodId)
-    return period ? period.name : "No asignado"
-  }
 
   return (
     <div className="flex flex-col min-h-screen">
@@ -179,52 +50,68 @@ export default function AcademicPage() {
             <Card>
               <CardHeader className="flex flex-row items-center justify-between">
                 <CardTitle>Gestión de Materias</CardTitle>
-                <Button onClick={() => setIsSubjectFormOpen(true)}>
-                  <Plus className="mr-2 h-4 w-4" />
-                  Nueva Materia
-                </Button>
+                <Dialog>
+                  <DialogTrigger asChild>
+                    <Button>
+                      <Plus className="mr-2 h-4 w-4" />
+                      Nueva Materia
+                    </Button>
+                  </DialogTrigger>
+                  <DialogContent>
+                    <DialogHeader>
+                      <DialogTitle>Agregar Nueva Materia</DialogTitle>
+                      <DialogDescription>
+                        Complete la información para registrar una nueva materia en el sistema.
+                      </DialogDescription>
+                    </DialogHeader>
+                    <div className="grid gap-4 py-4">
+                      <div className="grid grid-cols-4 items-center gap-4">
+                        <Label htmlFor="code" className="text-right">
+                          Código
+                        </Label>
+                        <Input id="code" className="col-span-3" />
+                      </div>
+                      <div className="grid grid-cols-4 items-center gap-4">
+                        <Label htmlFor="name" className="text-right">
+                          Nombre
+                        </Label>
+                        <Input id="name" className="col-span-3" />
+                      </div>
+                      <div className="grid grid-cols-4 items-center gap-4">
+                        <Label htmlFor="credits" className="text-right">
+                          Créditos
+                        </Label>
+                        <Input id="credits" type="number" className="col-span-3" />
+                      </div>
+                      <div className="grid grid-cols-4 items-center gap-4">
+                        <Label htmlFor="department" className="text-right">
+                          Departamento
+                        </Label>
+                        <Select>
+                          <SelectTrigger className="col-span-3">
+                            <SelectValue placeholder="Seleccionar departamento" />
+                          </SelectTrigger>
+                          <SelectContent>
+                            <SelectItem value="informatica">Informática</SelectItem>
+                            <SelectItem value="matematicas">Matemáticas</SelectItem>
+                            <SelectItem value="administracion">Administración</SelectItem>
+                            <SelectItem value="contaduria">Contaduría</SelectItem>
+                          </SelectContent>
+                        </Select>
+                      </div>
+                    </div>
+                    <DialogFooter>
+                      <Button type="submit">Guardar</Button>
+                    </DialogFooter>
+                  </DialogContent>
+                </Dialog>
               </CardHeader>
               <CardContent>
-                <div className="flex flex-col md:flex-row gap-4 mb-6">
+                <div className="flex items-center mb-6">
                   <div className="relative flex-1">
                     <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
-                    <Input
-                      type="search"
-                      placeholder="Buscar materias..."
-                      className="pl-8"
-                      value={searchTerm}
-                      onChange={(e) => setSearchTerm(e.target.value)}
-                    />
+                    <Input type="search" placeholder="Buscar materias..." className="pl-8" />
                   </div>
-                  <Select value={periodFilter} onValueChange={setPeriodFilter}>
-                    <SelectTrigger className="w-full md:w-[200px]">
-                      <SelectValue placeholder="Filtrar por período" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="all">Todos los períodos</SelectItem>
-                      {academicPeriods.map((period) => (
-                        <SelectItem key={period.id} value={period.id}>
-                          {period.name}
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
-                  <Select value={departmentFilter} onValueChange={setDepartmentFilter}>
-                    <SelectTrigger className="w-full md:w-[200px]">
-                      <SelectValue placeholder="Filtrar por departamento" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="all">Todos los departamentos</SelectItem>
-                      <SelectItem value="informatica">Informática</SelectItem>
-                      <SelectItem value="matematicas">Matemáticas</SelectItem>
-                      <SelectItem value="administracion">Administración</SelectItem>
-                      <SelectItem value="contaduria">Contaduría</SelectItem>
-                    </SelectContent>
-                  </Select>
-                  <Button variant="outline">
-                    <Filter className="mr-2 h-4 w-4" />
-                    Más Filtros
-                  </Button>
                 </div>
 
                 <div className="rounded-md border">
@@ -235,38 +122,21 @@ export default function AcademicPage() {
                         <TableHead>Nombre</TableHead>
                         <TableHead>Créditos</TableHead>
                         <TableHead>Departamento</TableHead>
-                        <TableHead>Período</TableHead>
-                        <TableHead>Estado</TableHead>
                         <TableHead>Acciones</TableHead>
                       </TableRow>
                     </TableHeader>
                     <TableBody>
-                      {filteredSubjects.map((subject) => (
+                      {subjectData.map((subject) => (
                         <TableRow key={subject.code}>
                           <TableCell>{subject.code}</TableCell>
                           <TableCell>{subject.name}</TableCell>
                           <TableCell>{subject.credits}</TableCell>
                           <TableCell>{subject.department}</TableCell>
-                          <TableCell>{getPeriodName(subject.periodId)}</TableCell>
-                          <TableCell>
-                            {subject.isActive ? (
-                              <Badge className="bg-green-500">Activa</Badge>
-                            ) : (
-                              <Badge variant="outline">Inactiva</Badge>
-                            )}
-                          </TableCell>
                           <TableCell>
                             <Button variant="ghost" size="sm">
                               Ver
                             </Button>
-                            <Button
-                              variant="ghost"
-                              size="sm"
-                              onClick={() => {
-                                setSelectedSubject(subject)
-                                setIsSubjectFormOpen(true)
-                              }}
-                            >
+                            <Button variant="ghost" size="sm">
                               Editar
                             </Button>
                           </TableCell>
@@ -283,7 +153,7 @@ export default function AcademicPage() {
             <Card>
               <CardHeader className="flex flex-row items-center justify-between">
                 <CardTitle>Gestión de Secciones</CardTitle>
-                <Button onClick={() => setIsSectionFormOpen(true)}>
+                <Button>
                   <Plus className="mr-2 h-4 w-4" />
                   Nueva Sección
                 </Button>
@@ -299,12 +169,9 @@ export default function AcademicPage() {
                       <SelectValue placeholder="Período" />
                     </SelectTrigger>
                     <SelectContent>
-                      <SelectItem value="all">Todos los períodos</SelectItem>
-                      {academicPeriods.map((period) => (
-                        <SelectItem key={period.id} value={period.id}>
-                          {period.name}
-                        </SelectItem>
-                      ))}
+                      <SelectItem value="2023-1">2023 - Trimestre I</SelectItem>
+                      <SelectItem value="2023-2">2023 - Trimestre II</SelectItem>
+                      <SelectItem value="2023-3">2023 - Trimestre III</SelectItem>
                     </SelectContent>
                   </Select>
                 </div>
@@ -333,14 +200,7 @@ export default function AcademicPage() {
                             <Button variant="ghost" size="sm">
                               Ver
                             </Button>
-                            <Button
-                              variant="ghost"
-                              size="sm"
-                              onClick={() => {
-                                setSelectedSection(section)
-                                setIsSectionFormOpen(true)
-                              }}
-                            >
+                            <Button variant="ghost" size="sm">
                               Editar
                             </Button>
                           </TableCell>
@@ -355,14 +215,8 @@ export default function AcademicPage() {
 
           <TabsContent value="planificacion">
             <Card>
-              <CardHeader className="flex flex-row items-center justify-between">
+              <CardHeader>
                 <CardTitle>Planificación Académica</CardTitle>
-                <Link href="/calendar">
-                  <Button>
-                    <Calendar className="mr-2 h-4 w-4" />
-                    Gestionar Períodos
-                  </Button>
-                </Link>
               </CardHeader>
               <CardContent>
                 <div className="space-y-6">
@@ -374,11 +228,9 @@ export default function AcademicPage() {
                           <SelectValue placeholder="Seleccionar período" />
                         </SelectTrigger>
                         <SelectContent>
-                          {academicPeriods.map((period) => (
-                            <SelectItem key={period.id} value={period.id}>
-                              {period.name}
-                            </SelectItem>
-                          ))}
+                          <SelectItem value="2023-1">2023 - Trimestre I</SelectItem>
+                          <SelectItem value="2023-2">2023 - Trimestre II</SelectItem>
+                          <SelectItem value="2023-3">2023 - Trimestre III</SelectItem>
                         </SelectContent>
                       </Select>
                     </div>
@@ -467,74 +319,19 @@ export default function AcademicPage() {
           Sistema de Gestión Universitaria © {new Date().getFullYear()}
         </div>
       </footer>
-      {isSubjectFormOpen && (
-        <SubjectForm
-          isOpen={isSubjectFormOpen}
-          onClose={() => {
-            setIsSubjectFormOpen(false)
-            setSelectedSubject(null)
-          }}
-          onSubmit={handleNewSubject}
-          initialData={
-            selectedSubject
-              ? {
-                  code: selectedSubject.code,
-                  name: selectedSubject.name,
-                  credits: selectedSubject.credits,
-                  department:
-                    selectedSubject.department.toLowerCase() === "informática"
-                      ? "informatica"
-                      : selectedSubject.department.toLowerCase() === "matemáticas"
-                        ? "matematicas"
-                        : selectedSubject.department.toLowerCase() === "administración"
-                          ? "administracion"
-                          : "contaduria",
-                  description: selectedSubject.description || "Descripción de la materia",
-                  prerequisites: selectedSubject.prerequisites || "",
-                  periodId: selectedSubject.periodId,
-                  isElective: selectedSubject.isElective || false,
-                  isActive: selectedSubject.isActive !== undefined ? selectedSubject.isActive : true,
-                }
-              : undefined
-          }
-        />
-      )}
-      {isSectionFormOpen && (
-        <SectionForm
-          isOpen={isSectionFormOpen}
-          onClose={() => {
-            setIsSectionFormOpen(false)
-            setSelectedSection(null)
-          }}
-          onSubmit={handleNewSection}
-          initialData={
-            selectedSection
-              ? {
-                  id: selectedSection.id,
-                  subjectId: selectedSection.subject.substring(0, 7),
-                  professorId: "",
-                  period: "2023-1",
-                  schedule: selectedSection.schedule,
-                  classroom: "",
-                  capacity: Number.parseInt(selectedSection.capacity.split("/")[1]),
-                }
-              : undefined
-          }
-        />
-      )}
     </div>
   )
 }
 
-// Datos de ejemplo para los períodos académicos
-const academicPeriods = [
-  { id: "2023-T1", name: "Trimestre I 2023" },
-  { id: "2023-T2", name: "Trimestre II 2023" },
-  { id: "2023-T3", name: "Trimestre III 2023" },
-  { id: "2024-T1", name: "Trimestre I 2024" },
+// Datos de ejemplo
+const subjectData = [
+  { code: "INF-101", name: "Introducción a la Programación", credits: 4, department: "Informática" },
+  { code: "MAT-201", name: "Cálculo I", credits: 4, department: "Matemáticas" },
+  { code: "ADM-301", name: "Administración de Empresas", credits: 3, department: "Administración" },
+  { code: "CON-101", name: "Contabilidad Básica", credits: 3, department: "Contaduría" },
+  { code: "INF-202", name: "Estructura de Datos", credits: 4, department: "Informática" },
 ]
 
-// Datos de ejemplo para las materias
 const sectionData = [
   {
     id: "SEC-001",
@@ -572,4 +369,3 @@ const sectionData = [
     capacity: "27/30",
   },
 ]
-

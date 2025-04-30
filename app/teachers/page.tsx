@@ -11,38 +11,21 @@ import { Label } from "@/components/ui/label"
 import { Textarea } from "@/components/ui/textarea"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { ChevronLeft, Upload, Save } from "lucide-react"
-import { ProfessorForm } from "@/components/teachers/professor-form"
 
 export default function TeachersPage() {
   const [activeTab, setActiveTab] = useState("evaluacion")
-  const [isProfessorFormOpen, setIsProfessorFormOpen] = useState(false)
-  const [selectedProfessor, setSelectedProfessor] = useState(null)
-
-  function handleNewProfessor(values: any) {
-    console.log("Nuevo profesor:", values)
-    // Aquí implementarías la lógica para guardar el profesor en la base de datos
-  }
 
   return (
     <div className="flex flex-col min-h-screen">
       <header className="bg-blue-700 text-white p-4">
         <div className="container mx-auto">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center">
-              <Link href="/">
-                <Button variant="ghost" className="text-white p-0 mr-2">
-                  <ChevronLeft className="h-5 w-5" />
-                </Button>
-              </Link>
-              <h1 className="text-2xl font-bold">Portal Docente</h1>
-            </div>
-            <Button
-              variant="outline"
-              className="text-white border-white hover:bg-blue-600"
-              onClick={() => setIsProfessorFormOpen(true)}
-            >
-              Registrar Profesor
-            </Button>
+          <div className="flex items-center">
+            <Link href="/">
+              <Button variant="ghost" className="text-white p-0 mr-2">
+                <ChevronLeft className="h-5 w-5" />
+              </Button>
+            </Link>
+            <h1 className="text-2xl font-bold">Portal Docente</h1>
           </div>
         </div>
       </header>
@@ -243,17 +226,6 @@ export default function TeachersPage() {
           Sistema de Gestión Universitaria © {new Date().getFullYear()}
         </div>
       </footer>
-      {isProfessorFormOpen && (
-        <ProfessorForm
-          isOpen={isProfessorFormOpen}
-          onClose={() => {
-            setIsProfessorFormOpen(false)
-            setSelectedProfessor(null)
-          }}
-          onSubmit={handleNewProfessor}
-          initialData={selectedProfessor}
-        />
-      )}
     </div>
   )
 }
@@ -278,4 +250,3 @@ const gradesData = [
   { id: "EST-004", name: "José Luis Martínez", cedula: "V-27.890.123", grades: [16, 15, 17] },
   { id: "EST-005", name: "Luisa Alejandra Torres", cedula: "V-25.456.789", grades: [19, 18, 20] },
 ]
-
